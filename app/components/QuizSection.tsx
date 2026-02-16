@@ -5,7 +5,6 @@ import {
   QUESTIONS,
   RESULTS,
   PLACEMENT_SUGGESTIONS,
-  GUMROAD_URL,
   type Feeling,
   type Theme,
   type Placement,
@@ -112,8 +111,9 @@ function QuestionBlock({
 // ─── Result Card ──────────────────────────────────────────────────────────────
 interface ResultCardProps {
   result: {
-    word: string;     // preview only
-    tagline: string;  // preview copy
+    word: string;
+    tagline: string;
+    gumroadUrl: string;
   };
 }
 
@@ -201,7 +201,7 @@ function ResultCard({ result }: ResultCardProps) {
 
         {/* Single CTA (price-forward) */}
         <a
-          href={GUMROAD_URL}
+          href={result.gumroadUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full text-center py-4 px-8 rounded-xl font-sans font-medium text-sm tracking-wide

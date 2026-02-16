@@ -1,8 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Configuration — update this constant to extend the quiz
+// Configuration — quiz data + per-result Gumroad links
 // ─────────────────────────────────────────────────────────────────────────────
-
-export const GUMROAD_URL = "https://monomaisonjp.gumroad.com/l/fhczf";
 
 // Quiz question definitions
 export const QUESTIONS = {
@@ -36,18 +34,21 @@ export type Feeling = "calm" | "strength" | "change";
 export type Theme = "minimal" | "nature" | "bold";
 export type Placement = "arm" | "rib" | "back";
 
+export type ResultKey = `${Feeling}+${Theme}`;
+
 export interface TattooResult {
   // FREE preview (shown on site)
   word: string;
   tagline: string;
 
-  // PAID content (shown only after purchase / in PDF)
+  // PAID content (in PDF)
   romaji: string;
   meaning: string;
   nuance: string;
-}
 
-export type ResultKey = `${Feeling}+${Theme}`;
+  // Per-result CTA link
+  gumroadUrl: string;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The 9 tattoo word results (Feeling × Theme)
@@ -58,17 +59,17 @@ export const RESULTS: Record<ResultKey, TattooResult> = {
     tagline: "A quiet strength you can carry.",
     romaji: "Nagi",
     meaning: "Calm sea / stillness",
-    nuance:
-      "Quiet strength, inner calm, a pause in motion. This character captures a rare moment when the sea holds its breath — perfect for those who find peace by going still rather than by searching.",
+    nuance: "Quiet strength, inner calm, a pause in motion…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/fwovvc",
   },
 
   "calm+nature": {
-    word: "森",
-    tagline: "Grounded calm, rooted in nature.",
-    romaji: "Mori",
-    meaning: "Forest",
-    nuance:
-      "Grounded calm, natural balance, a quiet place to breathe. 森 is built from three trees — a reminder that stillness grows in layers, rooted deep, never forced.",
+    word: "静謐",
+    tagline: "Stillness — calm you can return to.",
+    romaji: "Seihitsu",
+    meaning: "Tranquility / profound stillness",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/xrtden",
   },
 
   "calm+bold": {
@@ -76,26 +77,26 @@ export const RESULTS: Record<ResultKey, TattooResult> = {
     tagline: "Flow with presence — steady, alive.",
     romaji: "Nami",
     meaning: "Wave / flow",
-    nuance:
-      "Movement with calm presence; resilience through cycles. Waves don't resist — they arrive, shape, and recede. A strong visual that carries quiet wisdom beneath its energy.",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/fhczf",
   },
 
   "strength+minimal": {
-    word: "芯",
-    tagline: "Your core stays steady.",
-    romaji: "Shin",
-    meaning: "Core / backbone",
-    nuance:
-      "Inner strength, staying true, a quiet but firm center. 芯 refers to the core of a plant or pencil — the essential part that holds everything together without showing off.",
+    word: "力",
+    tagline: "Quiet power — simple and direct.",
+    romaji: "Chikara",
+    meaning: "Strength / power",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/sdmuiv",
   },
 
   "strength+nature": {
-    word: "岩",
+    word: "不動",
     tagline: "Unmoved. Unshaken. Enduring.",
-    romaji: "Iwa",
-    meaning: "Rock",
-    nuance:
-      "Stability and endurance; strength that doesn't need to shout. Unlike stone in motion, 岩 is the foundation that outlasts seasons, storms, and centuries — unmoved.",
+    romaji: "Fudou",
+    meaning: "Unshakable / immovable",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/rfqyr",
   },
 
   "strength+bold": {
@@ -103,17 +104,17 @@ export const RESULTS: Record<ResultKey, TattooResult> = {
     tagline: "Fuel, will, and forward motion.",
     romaji: "Honoo",
     meaning: "Flame",
-    nuance:
-      "Passion and willpower; bold energy and drive. 炎 is formed from two fire radicals stacked — fire amplified. For those who burn with purpose and aren't afraid to show it.",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/fisvhn",
   },
 
   "change+minimal": {
-    word: "移",
+    word: "新章",
     tagline: "A clean shift into your next chapter.",
-    romaji: "I",
-    meaning: "Shift / transition",
-    nuance:
-      "A clean symbol of moving forward, subtle change, new direction. 移 speaks of transition without drama — a quiet step across a threshold, one era giving way to the next.",
+    romaji: "Shinshou",
+    meaning: "New chapter",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/zhzvvy",
   },
 
   "change+nature": {
@@ -121,8 +122,8 @@ export const RESULTS: Record<ResultKey, TattooResult> = {
     tagline: "Move like wind — free and inevitable.",
     romaji: "Kaze",
     meaning: "Wind",
-    nuance:
-      "Momentum and freedom; change that arrives naturally. You don't see the wind — you feel it in everything it moves. This character holds the energy of invisible, unstoppable flow.",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/fpbnq",
   },
 
   "change+bold": {
@@ -130,8 +131,8 @@ export const RESULTS: Record<ResultKey, TattooResult> = {
     tagline: "Dawn energy. No apologies.",
     romaji: "Akatsuki",
     meaning: "Dawn",
-    nuance:
-      "A new beginning; transformation after darkness. 暁 captures the exact moment between night and day — that charged, luminous threshold most people sleep through. For those who don't.",
+    nuance: "…",
+    gumroadUrl: "https://monomaisonjp.gumroad.com/l/yqbrfk",
   },
 };
 
