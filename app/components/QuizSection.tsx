@@ -10,6 +10,7 @@ import {
   type Placement,
   type ResultKey,
 } from "../data";
+import { useEffect } from "react";
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ visible }: { visible: boolean }) {
@@ -294,9 +295,32 @@ export default function QuizSection() {
 
   const allAnswered = feeling !== null && theme !== null && placement !== null;
 
+  const resultKey: ResultKey | null =
+    feeling && theme ? `${feeling}+${theme}` : null;
+  const result = resultKey ? RESULTS[resultKey] : null;
+
+  // ✅ 結果が表示された瞬間にイベント（安定版：dataLayer）
+  useEffect(() => {
+    if (showResult && result) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: "generate_result",
+        result_word: result.word,
+      });
+
+      console.log("generate_result fired:", result.word);
+
+      // ※ 二重発火防止のため、結果表示ごとに1回だけにしたいなら
+      // showResultがtrueのまま同じresultで再レンダーされるケースは基本少ないけど、
+      // 気になる場合はここにガードを入れる（必要になったらやろう）
+    }
+  }, [showResult, result]);
+
   const handleGenerate = () => {
     if (!allAnswered) return;
+
     setShowResult(true);
+
     setTimeout(() => {
       resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
@@ -309,10 +333,6 @@ export default function QuizSection() {
     setPlacement(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  const resultKey: ResultKey | null =
-    feeling && theme ? `${feeling}+${theme}` : null;
-  const result = resultKey ? RESULTS[resultKey] : null;
 
   // (Currently unused, but keeping your variable as-is)
   const placementText = placement ? PLACEMENT_SUGGESTIONS[placement] : "";
@@ -350,28 +370,29 @@ export default function QuizSection() {
         />
       </div>
 
-     {/* Generate Button */}
-<div className="flex flex-col items-center gap-3">
-  <button
-    onClick={handleGenerate}
-    disabled={!allAnswered}
-    className={`w-full max-w-sm py-4 px-8 rounded-full font-mono text-xs tracking-widest uppercase
-      transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow
-      ${
-        allAnswered
-          ? "bg-brand-yellow text-brand-green shadow-lg hover:opacity-90 cursor-pointer"
-          : "bg-parchment-deep text-ink-muted cursor-not-allowed"
-      }`}
-    aria-disabled={!allAnswered}
-  >
-    Generate my tattoo word
-  </button>
-  {!allAnswered && (
-    <p className="text-xs text-ink-muted font-sans">
-      Answer all 3 questions to continue
-    </p>
-  )}
-</div>
+      {/* Generate Button */}
+      <div className="flex flex-col items-center gap-3">
+        <button
+          onClick={handleGenerate}
+          disabled={!allAnswered}
+          className={`w-full max-w-sm py-4 px-8 rounded-full font-mono text-xs tracking-widest uppercase
+            transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow
+            ${
+              allAnswered
+                ? "bg-brand-yellow text-brand-green shadow-lg hover:opacity-90 cursor-pointer"
+                : "bg-parchment-deep text-ink-muted cursor-not-allowed"
+            }`}
+          aria-disabled={!allAnswered}
+        >
+          Generate my tattoo word
+        </button>
+
+        {!allAnswered && (
+          <p className="text-xs text-ink-muted font-sans">
+            Answer all 3 questions to continue
+          </p>
+        )}
+      </div>
 
       {/* Result */}
       {showResult && result && (
