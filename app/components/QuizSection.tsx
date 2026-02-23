@@ -224,6 +224,39 @@ function ResultCard({ result }: ResultCardProps) {
     Created to help you decide with confidence — before anything becomes permanent.
   </p>
 </div>
+{/* PDF preview (example: 静) */}
+<div className="flex flex-col gap-3">
+  <p className="text-[0.6875rem] font-mono tracking-[0.18em] text-accent uppercase text-center">
+    Preview from the PDF
+  </p>
+
+  <div className="grid grid-cols-3 gap-2">
+    <img
+      src="/pdf-sample-1.png"
+      alt="PDF cover preview"
+      className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
+      loading="lazy"
+    />
+    <img
+      src="/pdf-sample-2.png"
+      alt="Meaning page preview"
+      className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
+      loading="lazy"
+    />
+    <img
+      src="/pdf-sample-3.png"
+      alt="Quote page preview"
+      className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
+      loading="lazy"
+    />
+  </div>
+
+  <p className="text-[11px] text-ink-muted font-sans text-center leading-relaxed">
+    Sample pages from the actual PDF (example: <span className="font-medium">静</span>).
+    <br className="hidden sm:block" />
+    Each tattoo word has its own version.
+  </p>
+</div>
 
 {/* Single CTA: “buy” -> “check/confirm” */}
 <a
