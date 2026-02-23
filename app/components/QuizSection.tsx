@@ -232,19 +232,19 @@ function ResultCard({ result }: ResultCardProps) {
 
   <div className="grid grid-cols-3 gap-2">
     <img
-      src="/pdf-sample-1.png"
+      src="/1.png"
       alt="PDF cover preview"
       className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
       loading="lazy"
     />
     <img
-      src="/pdf-sample-2.png"
+      src="/2.png"
       alt="Meaning page preview"
       className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
       loading="lazy"
     />
     <img
-      src="/pdf-sample-3.png"
+      src="/3.png"
       alt="Quote page preview"
       className="rounded-xl border border-parchment-deep bg-white/70 shadow-sm"
       loading="lazy"
