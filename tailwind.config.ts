@@ -13,23 +13,31 @@ const config: Config = {
         sans: ["'DM Sans'", "system-ui", "sans-serif"],
         mono: ["'DM Mono'", "monospace"],
       },
-      colors: {
-        ink: {
-          DEFAULT: "#1a1a1a",
-          soft: "#2e2e2e",
-          muted: "#6b6b6b",
-        },
-        parchment: {
-          DEFAULT: "#f5f2ec",
-          soft: "#faf8f4",
-          deep: "#ede9e0",
-        },
-        accent: {
-          DEFAULT: "#8b5e3c",
-          light: "#b8845a",
-          pale: "#f0e8df",
-        },
-      },
+colors: {
+  ink: {
+    DEFAULT: "#1a1a1a",
+    soft: "#2e2e2e",
+    muted: "#6b6b6b",
+  },
+  parchment: {
+    DEFAULT: "#f5f2ec",
+    soft: "#faf8f4",
+    deep: "#ede9e0",
+  },
+  accent: {
+    DEFAULT: "#8b5e3c",
+    light: "#b8845a",
+    pale: "#f0e8df",
+  },
+
+  // ✅ 広告寄せ：緑×黄×生成り
+  brand: {
+    DEFAULT: "#167A73", // hero背景の基準色（=green）
+    green: "#167A73",
+    yellow: "#F2D14B",
+    paper: "#F6F1E7",   // 生成り（サイトの背景/中間背景にも使える）
+  },
+},
       animation: {
         "fade-up": "fadeUp 0.6s ease forwards",
         "fade-in": "fadeIn 0.5s ease forwards",

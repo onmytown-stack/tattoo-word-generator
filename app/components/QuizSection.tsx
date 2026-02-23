@@ -41,7 +41,13 @@ interface RadioOptionProps {
   onChange: (v: string) => void;
 }
 
-function RadioOption({ value, label, description, selected, onChange }: RadioOptionProps) {
+function RadioOption({
+  value,
+  label,
+  description,
+  selected,
+  onChange,
+}: RadioOptionProps) {
   return (
     <label
       className={`radio-option ${selected ? "selected" : ""}`}
@@ -120,7 +126,7 @@ interface ResultCardProps {
 function ResultCard({ result }: ResultCardProps) {
   return (
     <div className="flex flex-col gap-8">
-      {/* Word preview (BLURRED, stronger + tasteful) */}
+      {/* Word preview (blurred) */}
       <div className="text-center py-10 border-t border-b border-parchment-deep">
         <div className="relative inline-block">
           <p
@@ -132,7 +138,7 @@ function ResultCard({ result }: ResultCardProps) {
             {result.word}
           </p>
 
-          {/* Soft noise/scanlines overlay to prevent “reading by squinting” */}
+          {/* Soft overlay to prevent “reading by squinting” */}
           <div
             className="absolute inset-0 pointer-events-none opacity-35 mix-blend-multiply"
             aria-hidden="true"
@@ -147,8 +153,9 @@ function ResultCard({ result }: ResultCardProps) {
           {result.tagline}
         </p>
 
+        {/* Key sentence: justify paying without sounding salesy */}
         <p className="text-[11px] text-ink-muted font-sans mt-2">
-          Full reading, nuance, and tattoo-safe reference are inside the $3 PDF.
+          Tattoos are permanent — the full reading and nuance are inside the $3 PDF.
         </p>
       </div>
 
@@ -157,14 +164,15 @@ function ResultCard({ result }: ResultCardProps) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.6875rem] font-mono tracking-[0.18em] text-accent uppercase">
-              Full meaning (locked)
+              Before you commit (PDF includes)
             </p>
             <p className="text-xs text-ink-muted font-sans mt-1">
-              Romaji • exact meaning • nuance • cultural context • placement notes
+              Romaji • literal meaning • nuance • what feels natural • what to avoid •
+              placement notes
             </p>
           </div>
 
-          {/* Lock icon (cleaner than emoji) */}
+          {/* Lock icon */}
           <div
             className="w-9 h-9 rounded-xl border border-parchment-deep bg-parchment flex items-center justify-center text-ink-muted"
             aria-hidden="true"
@@ -186,44 +194,61 @@ function ResultCard({ result }: ResultCardProps) {
           </div>
         </div>
 
-        {/* Blur teaser (stronger blur) */}
+        {/* Blur teaser */}
         <div className="flex flex-col gap-2">
           <div className="h-3 rounded bg-parchment-deep/80 blur-[3px]" />
           <div className="h-3 rounded bg-parchment-deep/70 blur-[3px] w-11/12" />
           <div className="h-3 rounded bg-parchment-deep/60 blur-[3px] w-10/12" />
         </div>
 
-        <ul className="text-sm text-ink font-sans list-disc pl-5 space-y-1">
-          <li>What this word truly implies in Japanese</li>
-          <li>What reads natural (and what to avoid)</li>
-          <li>Artist-ready reference page (PDF)</li>
-        </ul>
+       {/* Bullet list: keep it concrete */}
+<ul className="text-sm text-ink font-sans list-disc pl-5 space-y-1">
+  <li>What this word truly implies in Japanese</li>
+  <li>What reads natural (and what to avoid)</li>
+  <li>Artist-ready reference page (PDF)</li>
+</ul>
 
-        {/* Single CTA (price-forward) */}
-        <a
-          href={result.gumroadUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full text-center py-4 px-8 rounded-xl font-sans font-medium text-sm tracking-wide
-                     bg-ink text-parchment hover:bg-ink-soft shadow-md hover:shadow-lg
-                     transition-all duration-300"
-        >
-          Unlock full meaning — $3 PDF (instant download)
-        </a>
+{/* What you'll receive */}
+<div className="rounded-2xl border border-parchment-deep bg-parchment-soft/80 p-5 flex flex-col gap-3">
+  <p className="text-[0.6875rem] font-mono tracking-[0.18em] text-brand-green uppercase">
+    What you’ll receive (PDF)
+  </p>
+
+  <ul className="text-sm text-ink font-sans list-disc pl-5 space-y-1.5">
+    <li>Romaji + literal meaning</li>
+    <li>Nuance: what sounds natural (and what to avoid)</li>
+    <li>Artist-ready reference page (placement notes)</li>
+  </ul>
+
+  <p className="text-[11px] text-ink-muted font-sans">
+    Created to help you decide with confidence — before anything becomes permanent.
+  </p>
+</div>
+
+{/* Single CTA: “buy” -> “check/confirm” */}
+<a
+  href={result.gumroadUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full text-center py-4 px-8 rounded-full font-mono text-xs tracking-widest uppercase
+             bg-brand-yellow text-brand-green hover:opacity-90 shadow-lg
+             transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow"
+>
+  ✅ Check this before committing — $3 PDF
+</a>
 
         <p className="text-[11px] text-ink-muted font-sans text-center">
-          One-time payment • Instant access • Native Japanese creator
+          One-time payment • Instant download • Created by a native Japanese speaker
         </p>
       </div>
 
-      {/* Disclaimer */}
+      {/* Disclaimer (gentle, not scary) */}
       <p className="text-xs text-ink-muted leading-relaxed border-l-2 border-parchment-deep pl-3 font-sans">
-        Always double-check spelling and meaning with a professional before tattooing.
+        Tip: Show the PDF to your tattoo artist to confirm spacing, balance, and readability.
       </p>
     </div>
   );
 }
-
 
 // ─── Main Quiz Section ────────────────────────────────────────────────────────
 export default function QuizSection() {
@@ -255,6 +280,8 @@ export default function QuizSection() {
   const resultKey: ResultKey | null =
     feeling && theme ? `${feeling}+${theme}` : null;
   const result = resultKey ? RESULTS[resultKey] : null;
+
+  // (Currently unused, but keeping your variable as-is)
   const placementText = placement ? PLACEMENT_SUGGESTIONS[placement] : "";
 
   return (
@@ -290,34 +317,32 @@ export default function QuizSection() {
         />
       </div>
 
-            {/* Generate Button */}
-      <div className="flex flex-col items-center gap-3">
-        <button
-          onClick={handleGenerate}
-          disabled={!allAnswered}
-          className={`w-full max-w-sm py-4 px-8 rounded-xl font-sans font-medium text-sm tracking-wide transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent
-            ${
-              allAnswered
-                ? "bg-ink text-parchment hover:bg-ink-soft shadow-md hover:shadow-lg cursor-pointer"
-                : "bg-parchment-deep text-ink-muted cursor-not-allowed"
-            }`}
-          aria-disabled={!allAnswered}
-        >
-          Generate my tattoo word
-        </button>
-        {!allAnswered && (
-          <p className="text-xs text-ink-muted font-sans">
-            Answer all 3 questions to continue
-          </p>
-        )}
-      </div>
+     {/* Generate Button */}
+<div className="flex flex-col items-center gap-3">
+  <button
+    onClick={handleGenerate}
+    disabled={!allAnswered}
+    className={`w-full max-w-sm py-4 px-8 rounded-full font-mono text-xs tracking-widest uppercase
+      transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow
+      ${
+        allAnswered
+          ? "bg-brand-yellow text-brand-green shadow-lg hover:opacity-90 cursor-pointer"
+          : "bg-parchment-deep text-ink-muted cursor-not-allowed"
+      }`}
+    aria-disabled={!allAnswered}
+  >
+    Generate my tattoo word
+  </button>
+  {!allAnswered && (
+    <p className="text-xs text-ink-muted font-sans">
+      Answer all 3 questions to continue
+    </p>
+  )}
+</div>
 
       {/* Result */}
       {showResult && result && (
-        <div
-          ref={resultRef}
-          className="flex flex-col gap-8 scroll-mt-12"
-        >
+        <div ref={resultRef} className="flex flex-col gap-8 scroll-mt-12">
           {/* Ornament */}
           <div className="ornament-line">
             <span className="text-xs font-mono tracking-[0.2em] text-accent uppercase whitespace-nowrap">
