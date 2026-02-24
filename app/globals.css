@@ -2,8 +2,7 @@
 
 @tailwind base;
 @tailwind components;
-
- utilities;
+@tailwind utilities;
 
 :root {
   --ink: #1a1a1a;

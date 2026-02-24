@@ -12,6 +12,7 @@ const config: Config = {
         serif: ["'Cormorant Garamond'", "Georgia", "serif"],
         sans: ["'DM Sans'", "system-ui", "sans-serif"],
         mono: ["'DM Mono'", "monospace"],
+        lilita: ["var(--font-lilita-one)", "cursive"],
       },
 colors: {
   ink: {

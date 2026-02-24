@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Lilita_One } from "next/font/google";
 import "./globals.css";
+
+const lilitaOne = Lilita_One({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-lilita-one",
+});
 
 export const metadata: Metadata = {
   title: "Japanese Tattoo Word Generator",
@@ -22,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={lilitaOne.variable}>
       <head>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

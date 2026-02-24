@@ -15,7 +15,7 @@ import {
 function Toast({ visible }: { visible: boolean }) {
   if (!visible) return null;
   return (
-    <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 toast-enter">
+    <div className="toast-enter fixed bottom-6 left-1/2 z-50 -translate-x-1/2">
       <div className="flex items-center gap-2.5 rounded-full bg-ink px-5 py-3 text-sm font-sans font-medium tracking-wide text-parchment shadow-lg">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
           <path
@@ -50,8 +50,11 @@ function RadioOption({
   selected,
   onChange,
 }: RadioOptionProps) {
+  const inputId = `${groupName}-${value}`;
+
   return (
     <label
+      htmlFor={inputId}
       className={`
         group relative cursor-pointer rounded-2xl border-2 p-4 transition-all duration-200
         ${
@@ -60,9 +63,9 @@ function RadioOption({
             : "border-parchment-deep bg-white/80 hover:bg-white hover:shadow-sm hover:-translate-y-[1px]"
         }
       `}
-      onClick={() => onChange(value)}
     >
       <input
+        id={inputId}
         type="radio"
         name={groupName}
         value={value}
@@ -121,133 +124,55 @@ function RadioOption({
   );
 }
 
-// ─── Step Progress ────────────────────────────────────────────────────────────
-function StepProgress({ step }: { step: 1 | 2 | 3 }) {
-  const progress = (step / 3) * 100;
-
-  return (
-    <div className="mb-4 rounded-2xl border border-parchment-deep bg-white/70 p-4">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="font-lilita text-sm tracking-[0.03em] text-ink">
-          Step {step} of 3
-        </p>
-        <p className="font-sans text-xs text-ink-muted">Quick quiz</p>
-      </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-parchment">
-        <div
-          className="h-full rounded-full bg-brand-yellow transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-// ─── Question Step Card ───────────────────────────────────────────────────────
-interface QuestionStepCardProps {
-  step: 1 | 2 | 3;
+// ─── Question Block ───────────────────────────────────────────────────────────
+interface QuestionBlockProps {
+  number: number;
   label: string;
   options: { value: string; label: string; description: string }[];
   selected: string | null;
-  onSelect: (v: string) => void;
-  onBack?: () => void;
-  showGenerate?: boolean;
-  onGenerate?: () => void;
-  canGenerate?: boolean;
+  onChange: (v: string) => void;
 }
 
-function QuestionStepCard({
-  step,
+function QuestionBlock({
+  number,
   label,
   options,
   selected,
-  onSelect,
-  onBack,
-  showGenerate = false,
-  onGenerate,
-  canGenerate = false,
-}: QuestionStepCardProps) {
-  const groupName = `question-${step}`;
+  onChange,
+}: QuestionBlockProps) {
+  const groupName = `question-${number}`;
 
   return (
-    <div className="flex flex-col gap-5">
-      <StepProgress step={step} />
+    <section className="rounded-3xl border-2 border-parchment-deep bg-white/70 p-5 shadow-sm md:p-6">
+      <div className="mb-4 flex items-start gap-3">
+        <span className="mt-0.5 inline-flex h-8 min-w-8 items-center justify-center rounded-full border-2 border-accent/20 bg-brand-yellow/70 px-2 font-lilita text-xs tracking-[0.03em] text-brand-green shadow-sm">
+          {String(number).padStart(2, "0")}
+        </span>
 
-      <section className="rounded-3xl border-2 border-parchment-deep bg-white/70 p-5 shadow-sm md:p-6">
-        <div className="mb-4 flex items-start gap-3">
-          <span className="mt-0.5 inline-flex h-8 min-w-8 items-center justify-center rounded-full border-2 border-accent/20 bg-brand-yellow/70 px-2 font-lilita text-xs tracking-[0.03em] text-brand-green shadow-sm">
-            {String(step).padStart(2, "0")}
-          </span>
-
-          <div className="flex-1">
-            <h3 className="font-lilita text-2xl leading-tight tracking-[0.02em] text-ink">
-              {label}
-            </h3>
-            <p className="mt-1 font-sans text-xs text-ink-muted">
-              Choose one option
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3" role="radiogroup" aria-label={label}>
-          {options.map((opt) => (
-            <RadioOption
-              key={opt.value}
-              groupName={groupName}
-              value={opt.value}
-              label={opt.label}
-              description={opt.description}
-              selected={selected === opt.value}
-              onChange={onSelect}
-            />
-          ))}
-        </div>
-
-        <div className="mt-5 flex items-center justify-between gap-3">
-          <button
-            type="button"
-            onClick={onBack}
-            disabled={!onBack}
-            className={`rounded-full px-4 py-2 text-sm transition ${
-              onBack
-                ? "border border-parchment-deep bg-white text-ink hover:bg-parchment"
-                : "cursor-not-allowed border border-parchment-deep/60 bg-white/40 text-ink-muted"
-            }`}
-          >
-            ← Back
-          </button>
-
-          <p className="font-sans text-[11px] text-ink-muted">
-            Takes less than 10 seconds
+        <div className="flex-1">
+          <h3 className="font-lilita text-2xl leading-tight tracking-[0.02em] text-ink">
+            {label}
+          </h3>
+          <p className="mt-1 font-sans text-xs text-ink-muted">
+            Choose one option
           </p>
         </div>
+      </div>
 
-        {showGenerate && (
-          <div className="mt-5 border-t border-parchment-deep pt-5">
-            <button
-              onClick={onGenerate}
-              disabled={!canGenerate}
-              className={`w-full rounded-full px-8 py-4 font-lilita text-base tracking-[0.03em]
-              transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow
-              ${
-                canGenerate
-                  ? "cursor-pointer bg-brand-yellow text-brand-green shadow-lg hover:-translate-y-0.5 hover:opacity-90"
-                  : "cursor-not-allowed bg-parchment-deep text-ink-muted"
-              }`}
-              aria-disabled={!canGenerate}
-            >
-              Generate my tattoo word
-            </button>
-
-            {!canGenerate && (
-              <p className="mt-2 text-center font-sans text-xs text-ink-muted">
-                Answer all 3 questions to continue
-              </p>
-            )}
-          </div>
-        )}
-      </section>
-    </div>
+      <div className="flex flex-col gap-3" role="radiogroup" aria-label={label}>
+        {options.map((opt) => (
+          <RadioOption
+            key={opt.value}
+            groupName={groupName}
+            value={opt.value}
+            label={opt.label}
+            description={opt.description}
+            selected={selected === opt.value}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -274,7 +199,6 @@ function ResultCard({ result, placementText }: ResultCardProps) {
             {result.word}
           </p>
 
-          {/* Soft overlay to prevent “reading by squinting” */}
           <div
             className="pointer-events-none absolute inset-0 opacity-35 mix-blend-multiply"
             aria-hidden="true"
@@ -423,28 +347,78 @@ function ResultCard({ result, placementText }: ResultCardProps) {
   );
 }
 
-// ─── Main Quiz Section ────────────────────────────────────────────────────────
-type Step = 1 | 2 | 3 | 4; // 4 = result
+// ─── Sticky CTA (mobile) ──────────────────────────────────────────────────────
+interface StickyCTAProps {
+  visible: boolean;
+  allAnswered: boolean;
+  unansweredCount: number;
+  onGenerate: () => void;
+}
+
+function StickyCTA({
+  visible,
+  allAnswered,
+  unansweredCount,
+  onGenerate,
+}: StickyCTAProps) {
+  if (!visible) return null;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3 sm:px-4 sm:pb-4 md:hidden">
+      <div className="mx-auto w-full max-w-2xl rounded-2xl border-2 border-parchment-deep/80 bg-white/85 p-3 shadow-xl backdrop-blur supports-[backdrop-filter]:bg-white/75">
+        <div className="flex items-center gap-3">
+          <div
+            className={`shrink-0 rounded-full px-3 py-1 text-xs ${
+              allAnswered
+                ? "bg-brand-yellow/80 font-lilita tracking-[0.03em] text-brand-green"
+                : "bg-parchment font-sans text-ink-muted"
+            }`}
+          >
+            {allAnswered
+              ? "Ready ✨"
+              : `Answer ${unansweredCount} more question${unansweredCount === 1 ? "" : "s"}`}
+          </div>
+
+          <button
+            type="button"
+            onClick={onGenerate}
+            disabled={!allAnswered}
+            className={`flex-1 rounded-full px-5 py-3 text-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow ${
+              allAnswered
+                ? "bg-brand-yellow font-lilita text-base tracking-[0.03em] text-brand-green shadow-md hover:-translate-y-0.5 hover:opacity-90"
+                : "cursor-not-allowed bg-parchment-deep font-lilita text-base tracking-[0.03em] text-ink-muted"
+            }`}
+            aria-disabled={!allAnswered}
+          >
+            Generate my tattoo word
+          </button>
+        </div>
+
+        {!allAnswered && (
+          <p className="mt-2 text-center font-sans text-[11px] text-ink-muted">
+            Complete all 3 answers to unlock your result preview
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function QuizSection() {
   const [feeling, setFeeling] = useState<Feeling | null>(null);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [placement, setPlacement] = useState<Placement | null>(null);
-
-  const [step, setStep] = useState<Step>(1);
   const [showResult, setShowResult] = useState(false);
 
   const resultRef = useRef<HTMLDivElement>(null);
 
   const allAnswered = feeling !== null && theme !== null && placement !== null;
+  const unansweredCount = [feeling, theme, placement].filter((v) => v === null).length;
 
   const resultKey: ResultKey | null =
     feeling && theme ? `${feeling}+${theme}` : null;
   const result = resultKey ? RESULTS[resultKey] : null;
 
-  const placementText = placement ? PLACEMENT_SUGGESTIONS[placement] : "";
-
-  // GA event
   useEffect(() => {
     if (showResult && result) {
       (window as any).dataLayer = (window as any).dataLayer || [];
@@ -457,41 +431,14 @@ export default function QuizSection() {
     }
   }, [showResult, result]);
 
-  const goToStep = (next: Step) => {
-    setStep(next);
-    setTimeout(() => {
-      const el = document.getElementById("quiz-step-top");
-      el?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 30);
-  };
-
-  const handleSelectFeeling = (v: string) => {
-    setFeeling(v as Feeling);
-    setShowResult(false);
-    setTimeout(() => goToStep(2), 120);
-  };
-
-  const handleSelectTheme = (v: string) => {
-    setTheme(v as Theme);
-    setShowResult(false);
-    setTimeout(() => goToStep(3), 120);
-  };
-
-  const handleSelectPlacement = (v: string) => {
-    setPlacement(v as Placement);
-    setShowResult(false);
-    // Q3の後は「Generate」ボタンを見せるため、step=3のまま
-  };
-
   const handleGenerate = () => {
     if (!allAnswered) return;
 
     setShowResult(true);
-    setStep(4);
 
     setTimeout(() => {
       resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+    }, 50);
   };
 
   const handleRetake = () => {
@@ -499,54 +446,64 @@ export default function QuizSection() {
     setFeeling(null);
     setTheme(null);
     setPlacement(null);
-    setStep(1);
-
-    setTimeout(() => {
-      const el = document.getElementById("quiz-step-top");
-      el?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return (
-    <div className="flex w-full flex-col gap-8">
-      {/* anchor for smooth step scroll */}
-      <div id="quiz-step-top" className="scroll-mt-24" />
+  const placementText = placement ? PLACEMENT_SUGGESTIONS[placement] : "";
 
-      {/* Step screens */}
-      {!showResult && step === 1 && (
-        <QuestionStepCard
-          step={1}
+  return (
+    <div className="flex w-full flex-col gap-10 pb-24 md:pb-0">
+      {/* Questions */}
+      <div className="flex flex-col gap-5">
+        <QuestionBlock
+          number={1}
           label={QUESTIONS.feeling.label}
           options={[...QUESTIONS.feeling.options]}
           selected={feeling}
-          onSelect={handleSelectFeeling}
+          onChange={(v) => setFeeling(v as Feeling)}
         />
-      )}
 
-      {!showResult && step === 2 && (
-        <QuestionStepCard
-          step={2}
+        <QuestionBlock
+          number={2}
           label={QUESTIONS.theme.label}
           options={[...QUESTIONS.theme.options]}
           selected={theme}
-          onSelect={handleSelectTheme}
-          onBack={() => goToStep(1)}
+          onChange={(v) => setTheme(v as Theme)}
         />
-      )}
 
-      {!showResult && step === 3 && (
-        <QuestionStepCard
-          step={3}
+        <QuestionBlock
+          number={3}
           label={QUESTIONS.placement.label}
           options={[...QUESTIONS.placement.options]}
           selected={placement}
-          onSelect={handleSelectPlacement}
-          onBack={() => goToStep(2)}
-          showGenerate
-          onGenerate={handleGenerate}
-          canGenerate={allAnswered}
+          onChange={(v) => setPlacement(v as Placement)}
         />
-      )}
+      </div>
+
+      {/* Generate Button (desktop only) */}
+      <div className="hidden flex-col items-center gap-3 md:flex">
+        <button
+          type="button"
+          onClick={handleGenerate}
+          disabled={!allAnswered}
+          className={`w-full max-w-sm rounded-full px-8 py-4 font-lilita text-base tracking-[0.03em]
+          transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow
+          ${
+            allAnswered
+              ? "cursor-pointer bg-brand-yellow text-brand-green shadow-lg hover:-translate-y-0.5 hover:opacity-90"
+              : "cursor-not-allowed bg-parchment-deep text-ink-muted"
+          }`}
+          aria-disabled={!allAnswered}
+        >
+          Generate my tattoo word
+        </button>
+
+        {!allAnswered && (
+          <p className="font-sans text-xs text-ink-muted">
+            Answer all 3 questions to continue
+          </p>
+        )}
+      </div>
 
       {/* Result */}
       {showResult && result && (
@@ -561,6 +518,7 @@ export default function QuizSection() {
 
           <div className="pt-4 text-center">
             <button
+              type="button"
               onClick={handleRetake}
               className="rounded font-sans text-sm text-ink-muted underline underline-offset-4 transition-colors hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
@@ -570,6 +528,15 @@ export default function QuizSection() {
         </div>
       )}
 
+      {/* Sticky CTA (mobile only) */}
+      <StickyCTA
+        visible={!showResult}
+        allAnswered={allAnswered}
+        unansweredCount={unansweredCount}
+        onGenerate={handleGenerate}
+      />
+
+      {/* Toast (currently hidden unless you wire copy state later) */}
       <Toast visible={false} />
     </div>
   );

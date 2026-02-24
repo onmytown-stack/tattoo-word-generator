@@ -1,10 +1,19 @@
+"use client";
+
 import QuizSection from "./components/QuizSection";
 
 export default function Home() {
+  const scrollToQuiz = () => {
+    const el = document.getElementById("begin");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <main className="min-h-screen bg-parchment">
       {/* ── Header ── */}
-      <header className="w-full pt-8 pb-4 px-6 flex justify-center">
+      <header className="w-full px-6 pt-6 pb-3 md:pt-8 md:pb-4 flex justify-center">
         <div className="w-full max-w-lg flex items-center justify-between">
           <span className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
             wa·bi
@@ -16,79 +25,64 @@ export default function Home() {
       </header>
 
       {/* ── Hero (Green) ── */}
-      <section className="relative px-6 pt-12 pb-16 flex flex-col items-center text-center bg-brand-green text-brand-yellow">
-        <div className="max-w-lg w-full flex flex-col gap-6">
+      <section className="relative px-6 pt-10 pb-10 md:pt-14 md:pb-14 flex flex-col items-center text-center bg-brand-green text-brand-yellow overflow-hidden">
+        <div className="max-w-lg w-full flex flex-col gap-5 md:gap-6">
           {/* Background kanji decoration */}
-          {/* ② スマホでも薄く表示（opacity/text-sizeを調整） */}
           <div
             aria-hidden="true"
-            className="absolute left-1/2 -translate-x-1/2 -translate-y-4
-                       opacity-[0.06] md:opacity-[0.08]
-                       pointer-events-none select-none kanji-display
-                       text-[200px] md:text-[260px] leading-none"
-            style={{ top: "6rem", color: "rgba(246, 241, 231, 0.22)" }}
+            className="absolute left-1/2 -translate-x-1/2 pointer-events-none select-none kanji-display
+                       opacity-[0.05] md:opacity-[0.08]
+                       text-[170px] md:text-[240px] leading-none"
+            style={{ top: "4.8rem", color: "rgba(246, 241, 231, 0.18)" }}
           >
             文
           </div>
 
           {/* Badge */}
-          <div className="flex justify-center">
-            <span className="inline-flex items-center gap-1.5 border border-brand-cream/25 bg-brand-green/60 px-3 py-1.5 rounded-full text-[0.6875rem] font-mono text-brand-cream/80 tracking-widest uppercase">
-              <span className="w-1 h-1 rounded-full bg-brand-yellow inline-block" />
+          <div className="relative z-10 flex justify-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-cream/40 bg-brand-green/50 px-3 py-1.5 text-[0.65rem] md:text-[0.6875rem] font-mono tracking-[0.16em] md:tracking-widest uppercase text-brand-cream/90">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-yellow" />
               Human-picked by a native Japanese speaker
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-serif font-light text-4xl md:text-5xl leading-[1.15] tracking-tight">
+          <h1 className="relative z-10 font-lilita text-[1.65rem] leading-[1.12] tracking-[0.01em] md:text-5xl md:leading-[1.1]">
             Thinking of a Japanese tattoo?
             <br />
-            Which word suits your <span className="text-brand-yellow italic">soul</span>?
+            Which word suits your <span className="italic">soul</span>?
           </h1>
 
           {/* Subline */}
-          <p className="font-sans text-sm md:text-base leading-relaxed max-w-sm mx-auto text-brand-cream/85">
+          <p className="relative z-10 mx-auto max-w-md font-sans text-sm md:text-base leading-relaxed text-brand-cream/90">
             3 quick questions — then a word chosen for nuance.
-            <br />
-            Before it’s permanent, get a culturally accurate first read.
+            <br className="hidden sm:block" />
+            Get a culturally accurate first read before it’s permanent.
           </p>
 
-          {/* CTA */}
-          <div className="flex justify-center pt-2">
-            <a
-              href="#begin"
-              className="inline-flex items-center justify-center rounded-full bg-brand-yellow px-8 py-3 font-mono text-xs tracking-widest uppercase text-brand-green hover:opacity-90 transition shadow-lg"
+          {/* Hero CTA */}
+          <div className="relative z-10 flex justify-center pt-1">
+            <button
+              onClick={scrollToQuiz}
+              className="rounded-full bg-brand-yellow px-6 py-3 font-lilita text-sm md:text-base tracking-[0.03em] text-brand-green shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-brand-green"
             >
-              Begin
-            </a>
+              Start quiz ↓
+            </button>
           </div>
 
-          {/* Scroll indicator */}
-          <div className="flex flex-col items-center gap-2 pt-2">
-            <span className="text-xs font-mono tracking-widest uppercase text-brand-cream/70">
-              Scroll to begin
-            </span>
-            <div className="flex flex-col gap-1 items-center">
-              <span className="w-px h-8 bg-gradient-to-b from-brand-cream/35 to-transparent" />
-            </div>
-          </div>
+          {/* Small helper text (optional but useful on mobile) */}
+          <p className="relative z-10 text-[11px] md:text-xs font-sans text-brand-cream/75">
+            Takes less than 10 seconds · No signup required
+          </p>
         </div>
       </section>
 
       {/* ── Quiz ── */}
-      {/* ① scroll-mt を追加してスクロール位置を気持ちよく */}
       <section
         id="begin"
-        className="scroll-mt-10 px-6 pb-24 pt-10 flex flex-col items-center"
+        className="scroll-mt-8 px-6 pt-6 md:pt-8 pb-24 flex flex-col items-center"
       >
         <div className="w-full max-w-lg">
-          {/* Ornament line */}
-          <div className="ornament-line mb-12">
-            <span className="text-xs font-mono tracking-[0.2em] text-accent uppercase whitespace-nowrap">
-              Begin
-            </span>
-          </div>
-
           <QuizSection />
         </div>
       </section>
