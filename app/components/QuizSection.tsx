@@ -74,7 +74,6 @@ function RadioOption({
             : "border-parchment-deep bg-white/80 hover:bg-white hover:shadow-sm hover:-translate-y-[1px]"
         }
       `}
-      onClick={() => onChange(value)}
     >
       <input
         type="radio"
