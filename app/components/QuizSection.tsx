@@ -15,16 +15,19 @@ import {
 function pushGAEvent(eventName: string, params: Record<string, any> = {}) {
   if (typeof window === "undefined") return;
 
-  (window as any).dataLayer = (window as any).dataLayer || [];
-  (window as any).dataLayer.push({
-    event: eventName,
-    ...params,
-  });
+  const gtag = (window as any).gtag;
 
-  // Debug (remove later if you want)
+  // ✅ gtag.js に直接イベント送信（GA4で確実に拾われる）
+  if (typeof gtag === "function") {
+    gtag("event", eventName, params);
+  } else {
+    // 保険：gtagが未ロードでもdataLayerへ（後で拾える可能性）
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({ event: eventName, ...params });
+  }
+
   console.log(`[GA4] ${eventName}`, params);
 }
-
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ visible }: { visible: boolean }) {
   if (!visible) return null;
