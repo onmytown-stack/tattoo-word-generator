@@ -265,6 +265,46 @@ function QuestionStepCard({
   );
 }
 
+// ─── Gumroad CTA (shared) ─────────────────────────────────────────────────────
+function GumroadCTA({
+  href,
+  onClick,
+  variant = "block",
+}: {
+  href: string;
+  onClick?: () => void;
+  variant?: "block" | "sticky";
+}) {
+  const base =
+    "rounded-full bg-brand-yellow text-brand-green shadow-lg transition-all duration-300 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow font-lilita tracking-[0.04em]";
+
+  if (variant === "sticky") {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+        className={`${base} block w-full px-6 py-4 text-center text-sm`}
+      >
+        ✅ Download the $3 Tattoo-Ready PDF (Instant)
+      </a>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onClick}
+      className={`${base} w-full px-8 py-4 text-center text-sm hover:-translate-y-0.5`}
+    >
+      ✅ Download the $3 Tattoo-Ready PDF (Instant)
+    </a>
+  );
+}
+
 // ─── Result Card ──────────────────────────────────────────────────────────────
 interface ResultCardProps {
   result: {
@@ -277,8 +317,9 @@ interface ResultCardProps {
 }
 
 function ResultCard({ result, placementText, onCtaClick }: ResultCardProps) {
+  // Sticky CTA overlaps content; reserve bottom space.
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pb-28">
       {/* Word preview (blurred) */}
       <div className="border-y border-parchment-deep py-10 text-center">
         <div className="relative inline-block">
@@ -303,9 +344,18 @@ function ResultCard({ result, placementText, onCtaClick }: ResultCardProps) {
           {result.tagline}
         </p>
 
+        {/* 1-liner rationale */}
         <p className="mt-2 font-sans text-[11px] text-ink-muted">
-          Tattoos are permanent — the full reading and nuance are inside the $3 PDF.
+          Avoid awkward Japanese — nuance + what to avoid included.
         </p>
+
+        {/* TOP CTA (directly under result) */}
+        <div className="mt-4 flex flex-col items-center gap-2">
+          <GumroadCTA href={result.gumroadUrl} onClick={onCtaClick} />
+          <p className="text-center font-sans text-[11px] text-ink-muted">
+            One-time payment • Instant download
+          </p>
+        </div>
       </div>
 
       {/* Placement note */}
@@ -417,15 +467,8 @@ function ResultCard({ result, placementText, onCtaClick }: ResultCardProps) {
           </p>
         </div>
 
-        <a
-          href={result.gumroadUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onCtaClick}
-          className="w-full rounded-full bg-brand-yellow px-8 py-4 text-center font-lilita text-sm tracking-[0.04em] text-brand-green shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow"
-        >
-          ✅ Check this before committing — $3 PDF
-        </a>
+        {/* ORIGINAL CTA (kept) */}
+        <GumroadCTA href={result.gumroadUrl} onClick={onCtaClick} />
 
         <p className="text-center font-sans text-[11px] text-ink-muted">
           One-time payment • Instant download • Created by a native Japanese speaker
@@ -435,6 +478,20 @@ function ResultCard({ result, placementText, onCtaClick }: ResultCardProps) {
       <p className="border-l-2 border-parchment-deep pl-3 font-sans text-xs leading-relaxed text-ink-muted">
         Tip: Show the PDF to your tattoo artist to confirm spacing, balance, and readability.
       </p>
+
+      {/* Sticky CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-parchment-deep bg-white/80 backdrop-blur-md">
+        <div className="mx-auto max-w-2xl px-4 py-3">
+          <GumroadCTA
+            href={result.gumroadUrl}
+            onClick={onCtaClick}
+            variant="sticky"
+          />
+          <p className="mt-2 text-center font-sans text-[10px] text-ink-muted">
+            One-time payment • Instant download • Opens in a new tab
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
