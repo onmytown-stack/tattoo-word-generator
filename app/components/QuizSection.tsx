@@ -11,6 +11,20 @@ import {
   type ResultKey,
 } from "../data";
 
+// ─── GA4 helper ───────────────────────────────────────────────────────────────
+function pushGAEvent(eventName: string, params: Record<string, any> = {}) {
+  if (typeof window === "undefined") return;
+
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  (window as any).dataLayer.push({
+    event: eventName,
+    ...params,
+  });
+
+  // Debug (remove later if you want)
+  console.log(`[GA4] ${eventName}`, params);
+}
+
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ visible }: { visible: boolean }) {
   if (!visible) return null;
@@ -225,6 +239,7 @@ function QuestionStepCard({
         {showGenerate && (
           <div className="mt-5 border-t border-parchment-deep pt-5">
             <button
+              type="button"
               onClick={onGenerate}
               disabled={!canGenerate}
               className={`w-full rounded-full px-8 py-4 font-lilita text-base tracking-[0.03em]
@@ -259,9 +274,10 @@ interface ResultCardProps {
     gumroadUrl: string;
   };
   placementText?: string;
+  onCtaClick?: () => void;
 }
 
-function ResultCard({ result, placementText }: ResultCardProps) {
+function ResultCard({ result, placementText, onCtaClick }: ResultCardProps) {
   return (
     <div className="flex flex-col gap-8">
       {/* Word preview (blurred) */}
@@ -274,7 +290,6 @@ function ResultCard({ result, placementText }: ResultCardProps) {
             {result.word}
           </p>
 
-          {/* Soft overlay to prevent “reading by squinting” */}
           <div
             className="pointer-events-none absolute inset-0 opacity-35 mix-blend-multiply"
             aria-hidden="true"
@@ -364,7 +379,8 @@ function ResultCard({ result, placementText }: ResultCardProps) {
           </ul>
 
           <p className="font-sans text-[11px] text-ink-muted">
-            Created to help you decide with confidence — before anything becomes permanent.
+            Created to help you decide with confidence — before anything becomes
+            permanent.
           </p>
         </div>
 
@@ -406,6 +422,7 @@ function ResultCard({ result, placementText }: ResultCardProps) {
           href={result.gumroadUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={onCtaClick}
           className="w-full rounded-full bg-brand-yellow px-8 py-4 text-center font-lilita text-sm tracking-[0.04em] text-brand-green shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow"
         >
           ✅ Check this before committing — $3 PDF
@@ -444,18 +461,17 @@ export default function QuizSection() {
 
   const placementText = placement ? PLACEMENT_SUGGESTIONS[placement] : "";
 
-  // GA event
+  // generate_result
   useEffect(() => {
     if (showResult && result) {
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({
-        event: "generate_result",
+      pushGAEvent("generate_result", {
         result_word: result.word,
+        feeling,
+        theme,
+        placement,
       });
-
-      console.log("generate_result fired:", result.word);
     }
-  }, [showResult, result]);
+  }, [showResult, result, feeling, theme, placement]);
 
   const goToStep = (next: Step) => {
     setStep(next);
@@ -466,21 +482,43 @@ export default function QuizSection() {
   };
 
   const handleSelectFeeling = (v: string) => {
+    const isFirstAnswer = feeling === null;
+
     setFeeling(v as Feeling);
     setShowResult(false);
+
+    if (isFirstAnswer) {
+      pushGAEvent("start_quiz", { source: "q1_selection" });
+    }
+
+    pushGAEvent("select_q1", {
+      question: "feeling",
+      answer: v,
+    });
+
     setTimeout(() => goToStep(2), 120);
   };
 
   const handleSelectTheme = (v: string) => {
     setTheme(v as Theme);
     setShowResult(false);
+
+    pushGAEvent("select_q2", {
+      question: "theme",
+      answer: v,
+    });
+
     setTimeout(() => goToStep(3), 120);
   };
 
   const handleSelectPlacement = (v: string) => {
     setPlacement(v as Placement);
     setShowResult(false);
-    // Q3の後は「Generate」ボタンを見せるため、step=3のまま
+
+    pushGAEvent("select_q3", {
+      question: "placement",
+      answer: v,
+    });
   };
 
   const handleGenerate = () => {
@@ -557,10 +595,23 @@ export default function QuizSection() {
             </span>
           </div>
 
-          <ResultCard result={result} placementText={placementText} />
+          <ResultCard
+            result={result}
+            placementText={placementText}
+            onCtaClick={() => {
+              pushGAEvent("click_gumroad_cta", {
+                result_word: result.word,
+                feeling,
+                theme,
+                placement,
+                gumroad_url: result.gumroadUrl,
+              });
+            }}
+          />
 
           <div className="pt-4 text-center">
             <button
+              type="button"
               onClick={handleRetake}
               className="rounded font-sans text-sm text-ink-muted underline underline-offset-4 transition-colors hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
