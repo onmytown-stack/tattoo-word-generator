@@ -59,7 +59,10 @@ h3 { font-size: clamp(1.3rem, 2.5vw, 1.7rem); }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
 .container-narrow { max-width: 760px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
 section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
-.divider { width: 40px; height: 1px; background: #0a0a0a; margin: 1.5rem 0; }
+.divider { width: 96px; height: 14px; margin: 1.5rem 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 16'%3E%3Cpath d='M3 9 C25 4 60 3 95 6 C105 7 112 8 117 9 C112 11 100 12 80 12 C55 12 25 12 5 11 Z' fill='%230a0a0a'/%3E%3Ccircle cx='116' cy='5' r='1.3' fill='%230a0a0a'/%3E%3C/svg%3E") no-repeat center / contain;
+  clip-path: inset(0 100% 0 0); transition: clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.2s; }
+.divider.ink-in { clip-path: inset(0 0 0 0); }
 .divider-center { margin-left: auto; margin-right: auto; }
 
 /* ============ NAV ============ */
@@ -153,8 +156,8 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 .hero-teaser-pics:hover .hero-teaser-pic:nth-child(3) { transform: translateX(-12px); }
 .hero-teaser-more {
   width: 52px; height: 52px;
-  background: #FFEC00;
-  color: #0a0a0a;
+  background: #0a0a0a;
+  color: #fafaf9;
   border-radius: 50%;
   border: 2px solid #fafaf9;
   margin-left: -14px;
@@ -173,7 +176,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
   margin-top: 0.3rem;
   font-size: 0.85rem; color: #0a0a0a;
   text-decoration: underline;
-  text-decoration-color: #FFEC00;
+  text-decoration-color: #b5b4b0;
   text-decoration-thickness: 3px;
   text-underline-offset: 4px;
   transition: all 0.2s;
@@ -309,7 +312,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 }
 .stat:last-child { border-bottom: 1px solid rgba(250, 250, 249, 0.1); }
 .stat-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
-.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 600; color: #FFEC00; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 600; color: #fafaf9; }
 .stat-label { font-size: 0.88rem; color: #d4d4d4; letter-spacing: 0.02em; text-align: right; max-width: 60%; }
 
 .wrong-right {
@@ -508,7 +511,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 .tier.featured .tier-price,
 .tier.featured .tier-sub { color: #fafaf9; }
 .tier.featured .tier-feat { color: #d4d4d4; }
-.tier.featured .tier-feat::before { color: #FFEC00; }
+.tier.featured .tier-feat::before { color: #9a9a96; }
 .tier.featured .btn-primary { background: #fafaf9; color: #0a0a0a; border-color: #fafaf9; }
 .tier.featured .btn-primary:hover { background: #c8371f; color: #fafaf9; border-color: #c8371f; }
 
@@ -521,10 +524,10 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
   box-shadow: 0 2px 6px rgba(10, 10, 10, 0.15);
   white-space: nowrap;
 }
-.tier-badge-live { background: #A3E635; color: #0a0a0a; }
+.tier-badge-live { background: #0a0a0a; color: #fafaf9; border: 1px solid #0a0a0a; }
 .tier-badge-soon {
-  background: #0a0a0a; color: #FFEC00;
-  border: 1px solid #FFEC00;
+  background: #fafaf9; color: #4a4a48;
+  border: 1px dashed #8a8a86;
 }
 /* Waitlist Modal */
 .waitlist-modal {
@@ -568,7 +571,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 }
 .waitlist-card h3 em { font-style: italic; }
 .waitlist-tier-highlight {
-  background: #FFEC00; padding: 0 0.3em;
+  background: rgba(10, 10, 10, 0.08); padding: 0 0.3em; border-radius: 6px;
 }
 .waitlist-card p {
   color: #6b6b6b; font-size: 0.95rem; line-height: 1.6;
@@ -590,7 +593,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 .waitlist-form input:focus {
   outline: none;
   border-color: #0a0a0a;
-  box-shadow: 0 0 0 4px rgba(255, 236, 0, 0.35);
+  box-shadow: 0 0 0 4px rgba(10, 10, 10, 0.1);
   background: #fafaf9;
 }
 .waitlist-form button {
@@ -609,8 +612,9 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 }
 .waitlist-thanks {
   padding: 1.5rem 1rem;
-  background: #FFEC00;
+  background: #f1f0ec;
   color: #0a0a0a;
+  border-radius: 14px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.2rem; font-style: italic;
   text-align: center;
@@ -759,7 +763,7 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
 }
 .archive-counter-mini em {
   font-style: normal; font-weight: 600;
-  background: #FFEC00; padding: 0.1em 0.4em;
+  background: #0a0a0a; color: #fafaf9; padding: 0.1em 0.5em; border-radius: 999px;
 }
 .archive-arrows { display: flex; gap: 0.5rem; }
 .archive-arrow {
@@ -947,8 +951,8 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
   content: 'Coming soon';
   position: absolute;
   top: 1rem; right: 1rem;
-  background: #FFEC00; color: #0a0a0a;
-  padding: 0.4rem 0.75rem;
+  background: #0a0a0a; color: #fafaf9;
+  padding: 0.4rem 0.75rem; border-radius: 999px;
   font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
   z-index: 4; font-weight: 700;
   transform: rotate(3deg);
@@ -992,7 +996,8 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
   justify-content: center;
   margin: 0 auto 3.5rem;
   padding: 1.1rem 2rem;
-  background: #FFEC00;
+  background: #ffffff;
+  border: 1.5px solid #0a0a0a;
   width: fit-content;
   position: relative; z-index: 2;
   transform: rotate(-1.5deg);
@@ -1019,10 +1024,10 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; }
   font-style: normal;
 }
 .hl-y {
-  background-image: linear-gradient(to right, #FFEC00, #FFEC00);
-  background-size: 100% 36%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M3 14 C30 8 80 5 150 7 C175 8 190 9 198 11 L196 18 C170 20 120 21 70 20 C40 20 15 19 4 19 Z' fill='%23d8d7d3'/%3E%3Cpath d='M20 12 C70 9 130 9 185 12' stroke='%23c4c3bf' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+  background-size: 100% 48%;
   background-repeat: no-repeat;
-  background-position: 0 82%;
+  background-position: 0 92%;
   padding: 0 0.1em;
 }
 /* Japanese original text toggle */
@@ -1275,8 +1280,8 @@ footer {
 }
 .sticky-cta-link {
   display: flex; justify-content: space-between; align-items: center;
-  background: #FFEC00;
-  color: #0a0a0a;
+  background: #0a0a0a;
+  color: #fafaf9;
   padding: 0.95rem 1.25rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -1337,6 +1342,56 @@ footer {
   .stat-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
   .stat-label { max-width: none; text-align: left; }
 }
+
+
+/* ============ BIG HERO ============ */
+.hero-big { min-height: 100vh; padding: 8rem 0 6rem; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero-center { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.hero-eyebrow { margin-bottom: 2rem; }
+.hero-title { font-family: 'Inter', sans-serif; font-weight: 500; font-size: clamp(3.4rem, 12vw, 10rem);
+  line-height: 0.95; letter-spacing: -0.05em; color: #262624; margin: 0 0 1.8rem; }
+.ht-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.ht-line { display: inline-block; transform: translateY(105%); animation: htUp 1s cubic-bezier(0.34, 1.3, 0.64, 1) forwards; }
+.ht-mask:nth-child(2) .ht-line { animation-delay: 0.14s; }
+@keyframes htUp { to { transform: translateY(0); } }
+.hero-sub { font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 400; color: #3a3a38; max-width: 30em; line-height: 1.4; margin: 0 0 2.4rem;
+  opacity: 0; animation: fadeUp 0.9s ease 0.45s forwards; }
+.hero-big .hero-ctas { justify-content: center; opacity: 0; animation: fadeUp 0.9s ease 0.6s forwards; }
+.hero-big .hero-teaser { justify-content: center; border-top: none; margin-top: 2.6rem; padding-top: 0; opacity: 0; animation: fadeUp 0.9s ease 0.75s forwards; text-align: left; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-brush { position: absolute; right: -4vw; bottom: -14vw; font-family: 'Shippori Mincho', serif; font-weight: 800;
+  font-size: clamp(18rem, 42vw, 40rem); line-height: 1; color: #0a0a0a; opacity: 0.05; z-index: 1; pointer-events: none;
+  will-change: transform; }
+/* sections let the body colour show through, so the page colour can travel as you scroll */
+body { transition: background-color 0.15s linear; }
+body > section, body > section.archive { background: transparent !important; background-image: none !important; }
+@media (max-width: 768px) {
+  .hero-big { padding: 7rem 0 5rem; }
+  .hero-brush { bottom: -4rem; right: -3rem; font-size: 16rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ht-line, .hero-sub, .hero-big .hero-ctas, .hero-big .hero-teaser { animation: none; transform: none; opacity: 1; }
+}
+
+/* ============ INK (sumi) LAYER ============ */
+body { position: relative; }
+.ink-layer { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 60; mix-blend-mode: multiply; overflow: visible; }
+.ink-layer .ink-wash { fill: none; stroke: #0a0a0a; stroke-opacity: 0.09; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
+.ink-layer .ink-core { fill: none; stroke: #0a0a0a; stroke-opacity: 0.32; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ink-layer .ink-tip { fill: #0a0a0a; fill-opacity: 0.55; }
+.calligraphy-char { position: relative; z-index: 1; }
+.btn-primary, .choice, .waitlist-btn, .archive-arrow, .sticky-cta-link { position: relative; overflow: hidden; isolation: isolate; }
+.ink-ripple { position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, rgba(60,60,58,0.55) 0%, rgba(60,60,58,0.25) 45%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0); animation: inkRipple 0.75s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+@keyframes inkRipple { 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+.choice { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s, border-color 0.25s; }
+.choice:hover { transform: translateY(-3px) rotate(-0.6deg); }
+.tier, .archive-item { transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease; }
+.archive { background: #f4f3ef; background-image: radial-gradient(ellipse at 15% 0%, rgba(10,10,10,0.05), transparent 45%), radial-gradient(ellipse at 90% 100%, rgba(10,10,10,0.04), transparent 50%); }
+@media (prefers-reduced-motion: reduce) {
+  .divider { clip-path: none; transition: none; }
+}
 </style>
 </head>
 <body>
@@ -1362,44 +1417,32 @@ footer {
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <div class="eyebrow">Japanese tattoo calligraphy, by hand</div>
-        <h1>Your tattoo is <em>forever</em>. The word should be <em>chosen</em> that way.</h1>
-        <p class="lead">
-          Skip Google Translate. Skip AI fonts. Every Hitofude word is checked by a <span class="hl-y">native Japanese speaker</span> and written by hand with a brush, so it is right in meaning — and right in brush.
-        </p>
-        <div class="hero-ctas">
-          <a href="#quiz" class="btn-primary">
-            Find your word
-            <span class="arrow">→</span>
-          </a>
-          <a href="#archive" class="btn-secondary">See the archive</a>
-        </div>
-
-        <div class="hero-teaser">
-          <div class="hero-teaser-pics">
-            <img src="07-kaito.jpg" alt="" class="hero-teaser-pic" loading="eager" />
-            <img src="ren-hakanai.jpg" alt="" class="hero-teaser-pic" loading="eager" />
-            <img src="03-tack-daimoku.jpg" alt="" class="hero-teaser-pic" loading="eager" />
-            <div class="hero-teaser-more">+6</div>
-          </div>
-          <div class="hero-teaser-text">
-            <strong>9 real Japanese tattoos.</strong><br>
-            <a href="#archive" class="hero-teaser-link">See what they chose, and why →</a>
-          </div>
-        </div>
+<section class="hero hero-big">
+  <div class="container hero-center">
+    <div class="eyebrow hero-eyebrow">Japanese tattoo calligraphy · by hand</div>
+    <h1 class="hero-title">
+      <span class="ht-mask"><span class="ht-line">Real kanji.</span></span>
+      <span class="ht-mask"><span class="ht-line">Real brush.</span></span>
+    </h1>
+    <p class="hero-sub">Tattoo words checked by native Japanese speakers — and written by hand, not a font.</p>
+    <div class="hero-ctas">
+      <a href="#quiz" class="btn-primary">Find your word <span class="arrow">→</span></a>
+      <a href="#archive" class="btn-secondary">See the archive</a>
+    </div>
+    <div class="hero-teaser">
+      <div class="hero-teaser-pics">
+        <img src="07-kaito.jpg" alt="" class="hero-teaser-pic" loading="eager" />
+        <img src="ren-hakanai.jpg" alt="" class="hero-teaser-pic" loading="eager" />
+        <img src="03-tack-daimoku.jpg" alt="" class="hero-teaser-pic" loading="eager" />
+        <div class="hero-teaser-more">+6</div>
       </div>
-      <div class="hero-calligraphy">
-        <div class="washi">
-          <span class="calligraphy-char jp">道</span>
-          <div class="hanko">筆</div>
-        </div>
+      <div class="hero-teaser-text">
+        <strong>9 real Japanese tattoos.</strong><br>
+        <a href="#archive" class="hero-teaser-link">See what they chose, and why →</a>
       </div>
     </div>
   </div>
+  <div class="hero-brush jp" aria-hidden="true">筆</div>
   <div class="scroll-hint">scroll</div>
 </section>
 
@@ -2236,7 +2279,7 @@ const io = new IntersectionObserver((entries) => {
     Array.from(group.children).forEach((child, i) => {
       child.style.opacity = '0';
       child.style.transform = 'translateY(22px)';
-      child.style.transition = `opacity 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) ${i * 90}ms, transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) ${i * 90}ms`;
+      child.style.transition = `opacity 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) ${i * 90}ms, transform 0.85s cubic-bezier(0.34, 1.45, 0.64, 1) ${i * 90}ms`;
       io.observe(child);
     });
   });
@@ -2267,5 +2310,142 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 </script>
 
+
+<script>
+/* ===== Ink layer: a brush line that draws itself as you scroll ===== */
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'ink-layer'); svg.setAttribute('aria-hidden', 'true');
+  const wash = document.createElementNS(NS, 'path'); wash.setAttribute('class', 'ink-wash');
+  const core = document.createElementNS(NS, 'path'); core.setAttribute('class', 'ink-core');
+  const tip = document.createElementNS(NS, 'circle'); tip.setAttribute('class', 'ink-tip'); tip.setAttribute('r', '5');
+  svg.append(wash, core, tip);
+  document.body.prepend(svg);
+  let L = 0, startY = 0, endY = 1, ok = false;
+
+  function build() {
+    const W = document.documentElement.clientWidth;
+    const H = document.documentElement.scrollHeight;
+    const gutter = (W - 1200) / 2;
+    if (W < 1100 || gutter < 50) { svg.style.display = 'none'; ok = false; return; }
+    svg.style.display = '';
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const xs = [gutter * 0.5, W - gutter * 0.5];
+    const secs = Array.from(document.querySelectorAll('body > section'));
+    const tops = secs.map(s => s.getBoundingClientRect().top + window.scrollY);
+    const footer = document.querySelector('footer');
+    const end = footer ? footer.getBoundingClientRect().top + window.scrollY - 80 : H - 200;
+    startY = (tops[0] || 0) + 260; endY = end;
+    let side = 1, y = startY, x = xs[side];
+    let d = `M ${x} ${y}`;
+    const bounds = tops.slice(1).filter(t => t > startY + 200 && t < end - 100);
+    bounds.forEach((b, bi) => {
+      // gentle wiggle down the gutter
+      while (y < b - 320) {
+        const ny = Math.min(y + 260, b - 220);
+        const amp = (Math.floor(y / 260) % 2 ? 1 : -1) * 16;
+        d += ` C ${x + amp} ${y + (ny - y) * 0.35}, ${x - amp} ${y + (ny - y) * 0.65}, ${x} ${ny}`;
+        y = ny;
+      }
+      // little curl, then swoop across the section boundary
+      const curl = side ? -1 : 1;
+      d += ` C ${x} ${y + 60}, ${x + curl * 46} ${y + 70}, ${x + curl * 30} ${y + 30}`;
+      d += ` C ${x + curl * 18} ${y + 6}, ${x - curl * 6} ${y + 40}, ${x} ${y + 90}`;
+      y += 90;
+      side = 1 - side;
+      const nx = xs[side];
+      d += ` C ${x} ${b + 20}, ${nx} ${b - 40}, ${nx} ${b + 160}`;
+      x = nx; y = b + 160;
+    });
+    while (y < end) {
+      const ny = Math.min(y + 260, end);
+      d += ` C ${x + 14} ${y + (ny - y) * 0.35}, ${x - 14} ${y + (ny - y) * 0.65}, ${x} ${ny}`;
+      y = ny;
+    }
+    wash.setAttribute('d', d); core.setAttribute('d', d);
+    L = core.getTotalLength();
+    [wash, core].forEach(p => { p.style.strokeDasharray = L; });
+    ok = true; update();
+  }
+  function update() {
+    if (!ok) return;
+    let t = reduce ? 1 : (window.scrollY + window.innerHeight * 0.7 - startY) / (endY - startY);
+    t = Math.max(0, Math.min(1, t));
+    const drawn = L * t;
+    [wash, core].forEach(p => { p.style.strokeDashoffset = L - drawn; });
+    const pt = core.getPointAtLength(Math.max(drawn, 0.01));
+    tip.setAttribute('cx', pt.x); tip.setAttribute('cy', pt.y);
+    tip.style.opacity = t > 0.002 && t < 0.998 ? 1 : 0;
+  }
+  let raf = 0;
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); }); }, { passive: true });
+  let rt;
+  const rebuild = () => { clearTimeout(rt); rt = setTimeout(build, 150); };
+  window.addEventListener('resize', rebuild);
+  window.addEventListener('load', build);
+  if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(document.body);
+  build();
+})();
+
+/* ===== Brush dividers draw in when visible ===== */
+(function () {
+  const els = document.querySelectorAll('.divider');
+  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('ink-in')); return; }
+  const ob = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('ink-in'); ob.unobserve(e.target); } }), { threshold: 0.6 });
+  els.forEach(e => ob.observe(e));
+})();
+
+/* ===== Ink-drop ripple on buttons ===== */
+document.addEventListener('pointerdown', (ev) => {
+  const btn = ev.target.closest('.btn-primary, .choice, .waitlist-btn, .archive-arrow, .sticky-cta-link');
+  if (!btn) return;
+  const r = btn.getBoundingClientRect();
+  const s = document.createElement('span');
+  const size = Math.max(r.width, r.height) * 2.2;
+  s.className = 'ink-ripple';
+  s.style.width = s.style.height = size + 'px';
+  s.style.left = (ev.clientX - r.left) + 'px';
+  s.style.top = (ev.clientY - r.top) + 'px';
+  btn.appendChild(s);
+  setTimeout(() => s.remove(), 800);
+});
+</script>
+
+<script>
+/* ===== Page colour travels with scroll (paper → sumi → black) ===== */
+(function () {
+  const plan = [['.hero', '#f4f3ef'], ['.problem', '#0a0a0a'], ['#archive', '#e6e5e0'], ['#how', '#fafaf9'],
+                ['#quiz', '#dcdad4'], ['#pricing', '#f4f3ef'], ['#masters', '#e6e5e0'], ['#faq', '#fafaf9'], ['.final-cta', '#0a0a0a']];
+  const items = plan.map(([sel, c]) => ({ el: document.querySelector(sel), c: c.match(/\w\w/g).map(x => parseInt(x, 16)) })).filter(i => i.el);
+  const brush = document.querySelector('.hero-brush');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+  function paint() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let col = items[0].c;
+    for (let i = 0; i < items.length; i++) {
+      const r = items[i].el.getBoundingClientRect();
+      const top = r.top + window.scrollY, bot = top + r.height;
+      if (mid >= top && mid < bot) {
+        const next = items[i + 1];
+        const t = (mid - top) / r.height;
+        // blend into the next colour over the last 35% of each section
+        col = next ? mix(items[i].c, next.c, Math.max(0, (t - 0.65) / 0.35)) : items[i].c;
+        break;
+      }
+      if (mid >= bot) col = items[i].c;
+    }
+    document.body.style.backgroundColor = `rgb(${col.join(',')})`;
+    if (brush && !reduce) brush.style.transform = `translateY(${window.scrollY * -0.25}px) rotate(${window.scrollY * 0.01}deg)`;
+  }
+  let raf = 0;
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; paint(); }); }, { passive: true });
+  window.addEventListener('resize', paint);
+  paint();
+})();
+</script>
 </body>
 </html>
